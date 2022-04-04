@@ -1,6 +1,6 @@
 # Phosphorus Minor (Visual Studio Code Color Theme)
 
-A functional Visual Studio Code theme.
+An attempt at a functional, monochromatic Visual Studio Code theme (inspired by a certain movie).
 
 ## Screenshot
 
