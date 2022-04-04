@@ -1,5 +1,6 @@
 build/
 themes/
+*.vsix
 
 node_modules/
 *.log
