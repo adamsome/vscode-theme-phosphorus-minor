@@ -1,0 +1,9 @@
+.vscode/**
+.vscode-test/**
+.gitignore
+
+build/
+src/
+node_modules/
+*.log
+*.code-workspace

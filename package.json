@@ -1,0 +1,72 @@
+{
+  "name": "vscode-theme-phosphorus-minor",
+  "version": "1.0.0",
+  "displayName": "Phosphorus Minor",
+  "homepage": "https://github.com/adamsome/vscode-theme-phosphorus-minor",
+  "description": "Phosphorus Minor",
+  "publisher": "adamsome",
+  "author": "adamsome (https://github.com/adamsome)",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run build:compile && npm run build:themes",
+    "build:compile": "tsc -p .",
+    "build:themes": "mkdir -p ./themes && node build/build.js",
+    "start": "npm run build",
+    "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}' --quiet --fix",
+    "vscode:prepublish": "npm run build"
+  },
+  "maintainers": [
+    "adamsome (https://github.com/adamsome)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adamsome/vscode-theme-phosphorus-minor.git"
+  },
+  "engines": {
+    "vscode": "^1.19.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "phosphorus-minor",
+    "theme",
+    "color-theme"
+  ],
+  "icon": "logo.png",
+  "galleryBanner": {
+    "color": "#32302f",
+    "theme": "dark"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Phosphorus Minor",
+        "uiTheme": "vs-dark",
+        "path": "./themes/phosphorus-minor.json",
+        "subtype": "medium"
+      }
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc --noEmit && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
+  }
+}

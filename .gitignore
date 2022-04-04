@@ -1,0 +1,7 @@
+build/
+themes/
+
+node_modules/
+*.log
+
+*.code-workspace
