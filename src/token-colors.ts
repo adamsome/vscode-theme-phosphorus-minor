@@ -1,63 +1,99 @@
-import { Palette } from './palette'
-import { TokenColor } from './models'
+import {
+  ThemeMode,
+  ThemeSubtype,
+  TokenColor,
+  TokenSemanticColors,
+} from './models'
+import PALETTE from './palette'
 import { opacity } from './util'
 
-export default (palette: Palette): TokenColor[] => {
-  const c = palette // Alias
+const p = PALETTE
+const fg1 = p.emerald[600]
+const fg2 = p.emerald[700]
+const keywords = p.mint[500]
+const interfaces = p.seaGreen[600]
 
-  const fg = c.emerald[600]
-  const fgSubtle = c.emerald[700]
-  const headers = c.phosphorus[500]
-  const punctuation = fgSubtle
+const DEFAULT_TOKEN_SEMANTIC_COLORS: TokenSemanticColors = {
+  fg1,
+  fg2,
+  headers: p.phosphorus[500],
+  punctuation: fg2,
   // Comments
-  const comments = c.stone[600]
-  const commentTags = opacity(75, c.emerald[300])
-  const commentParams = fgSubtle
+  comments: p.stone[600],
+  commentTags: opacity(75, p.emerald[300]),
+  commentParams: fg2,
   // Numbers
-  const numbers = c.phosphorus[500]
+  numbers: p.phosphorus[500],
   // Strings
-  const strings = c.phosphorus[500]
-  const stringInterpolation = c.seaGreen[600]
-  const stringEscape = c.emerald[300]
+  strings: p.phosphorus[500],
+  stringInterpolation: p.seaGreen[600],
+  stringEscape: p.emerald[300],
   // Regex
-  const regex = c.seaGreen[500]
-  const regexCharacterClass = fg
-  const regexGroup = fgSubtle
-  const regexQuantifier = regexCharacterClass
+  regex: p.seaGreen[500],
+  regexCharacterClass: fg1,
+  regexGroup: fg2,
+  regexQuantifier: fg1,
   // Keywords
-  const keywords = c.mint[500]
-  const operators = keywords
-  const operatorsSpecial = keywords
-  const storage = keywords
-  const controls = keywords
-  const imports = keywords
+  keywords,
+  operators: keywords,
+  operatorsSpecial: keywords,
+  storage: keywords,
+  controls: keywords,
+  imports: keywords,
   // Functions
-  const functions = c.teal[600]
+  functions: p.teal[600],
   // Types
-  const thisKeyword = keywords
-  const interfaces = c.seaGreen[600]
-  const classes = interfaces
-  const decorators = interfaces
+  thisKeyword: keywords,
+  interfaces,
+  classes: interfaces,
+  decorators: interfaces,
   // Variables
-  const variables = fg
+  variables: fg1,
   // HTML
-  const tags = c.teal[600]
-  const tagsClose = c.teal[700]
-  const attributes = fg
-  const attributeIDs = c.emerald[300]
+  tags: p.teal[600],
+  tagsClose: p.teal[700],
+  attributes: fg1,
+  attributeIDs: p.emerald[300],
   // Serializable
-  const keys1 = c.seaGreen[500]
-  const keys2 = c.teal[500]
-  const keys3 = c.mint[500]
-  const keys4 = fg
+  keys1: p.seaGreen[500],
+  keys2: p.teal[500],
+  keys3: p.mint[500],
+  keys4: fg1,
   // Markup
-  const bold = c.emerald[300]
-  const links = c.mint[500]
-  const code = c.seaGreen[500]
+  bold: p.emerald[300],
+  links: p.mint[500],
+  code: p.seaGreen[500],
   // Misc
-  const added = c.seaGreen[500]
-  const deleted = c.red[500]
-  const modified = c.mint[500]
+  add: p.seaGreen[500],
+  deleted: p.red[500],
+  modify: p.mint[500],
+}
+
+function buildColors(
+  mode: ThemeMode,
+  subtype: ThemeSubtype
+): TokenSemanticColors {
+  switch (mode) {
+    case 'vs': {
+      throw new Error(`UI Theme '${mode}' (light-mode) not supported.`)
+    }
+    case 'vs-dark':
+    default: {
+      switch (subtype) {
+        case 'medium':
+        default: {
+          return DEFAULT_TOKEN_SEMANTIC_COLORS
+        }
+      }
+    }
+  }
+}
+
+export default function buildTokenColors(
+  mode: ThemeMode,
+  subtype: ThemeSubtype
+): TokenColor[] {
+  const c = buildColors(mode, subtype)
   return [
     // General
 
@@ -65,7 +101,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Text',
       scope: ['source', 'text.html'],
       settings: {
-        foreground: fg,
+        foreground: c.fg1,
       },
     },
     {
@@ -83,7 +119,7 @@ export default (palette: Palette): TokenColor[] => {
     {
       scope: 'header',
       settings: {
-        foreground: headers,
+        foreground: c.headers,
       },
     },
     {
@@ -96,7 +132,7 @@ export default (palette: Palette): TokenColor[] => {
     {
       scope: 'invalid',
       settings: {
-        foreground: deleted,
+        foreground: c.deleted,
       },
     },
 
@@ -118,7 +154,7 @@ export default (palette: Palette): TokenColor[] => {
         'punctuation.section.embedded.end.jsx',
       ],
       settings: {
-        foreground: punctuation,
+        foreground: c.punctuation,
       },
     },
 
@@ -132,7 +168,7 @@ export default (palette: Palette): TokenColor[] => {
         'wildcard.comment',
       ],
       settings: {
-        foreground: comments,
+        foreground: c.comments,
         fontStyle: 'italic',
       },
     },
@@ -144,7 +180,7 @@ export default (palette: Palette): TokenColor[] => {
         'comment.block.documentation storage.type.class punctuation',
       ],
       settings: {
-        foreground: commentTags,
+        foreground: c.commentTags,
         fontStyle: 'italic',
       },
     },
@@ -154,7 +190,7 @@ export default (palette: Palette): TokenColor[] => {
         'comment.block.documentation variable.other',
       ],
       settings: {
-        foreground: commentParams,
+        foreground: c.commentParams,
         fontStyle: 'italic',
       },
     },
@@ -172,7 +208,7 @@ export default (palette: Palette): TokenColor[] => {
         'keyword.other.unit',
       ],
       settings: {
-        foreground: numbers,
+        foreground: c.numbers,
       },
     },
 
@@ -181,14 +217,14 @@ export default (palette: Palette): TokenColor[] => {
     {
       scope: ['string', 'meta.preprocessor.string'],
       settings: {
-        foreground: strings,
+        foreground: c.strings,
       },
     },
     {
       name: 'String escape sequences',
       scope: ['constant.character', 'constant.regexp'],
       settings: {
-        foreground: stringEscape,
+        foreground: c.stringEscape,
       },
     },
     {
@@ -205,7 +241,7 @@ export default (palette: Palette): TokenColor[] => {
         'string.interpolated punctuation.definition.string.end',
       ],
       settings: {
-        foreground: stringInterpolation,
+        foreground: c.stringInterpolation,
       },
     },
 
@@ -215,7 +251,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Regex text',
       scope: 'string.regexp',
       settings: {
-        foreground: regex,
+        foreground: c.regex,
       },
     },
     {
@@ -226,7 +262,7 @@ export default (palette: Palette): TokenColor[] => {
         'support.other.parenthesis.regexp',
       ],
       settings: {
-        foreground: regexGroup,
+        foreground: c.regexGroup,
       },
     },
     {
@@ -241,21 +277,21 @@ export default (palette: Palette): TokenColor[] => {
         'constant.character.set.regexp',
       ],
       settings: {
-        foreground: regexCharacterClass,
+        foreground: c.regexCharacterClass,
       },
     },
     {
       name: 'RegEx Quantifiers',
       scope: 'keyword.operator.quantifier.regexp',
       settings: {
-        foreground: regexQuantifier,
+        foreground: c.regexQuantifier,
       },
     },
     {
       name: 'RegEx suffix control character',
       scope: 'string.regexp keyword.other',
       settings: {
-        foreground: punctuation,
+        foreground: c.punctuation,
       },
     },
 
@@ -271,7 +307,7 @@ export default (palette: Palette): TokenColor[] => {
         'source.groovy storage.type.def',
       ],
       settings: {
-        foreground: storage,
+        foreground: c.storage,
       },
     },
 
@@ -326,7 +362,7 @@ export default (palette: Palette): TokenColor[] => {
         'entity.other.inherited-class',
       ],
       settings: {
-        foreground: classes,
+        foreground: c.classes,
       },
     },
     {
@@ -384,7 +420,7 @@ export default (palette: Palette): TokenColor[] => {
         'entity.other.inherited-class',
       ],
       settings: {
-        foreground: interfaces,
+        foreground: c.interfaces,
       },
     },
     {
@@ -400,7 +436,7 @@ export default (palette: Palette): TokenColor[] => {
         'keyword.expressions-and-types.swift',
       ],
       settings: {
-        foreground: thisKeyword,
+        foreground: c.thisKeyword,
       },
     },
 
@@ -409,20 +445,20 @@ export default (palette: Palette): TokenColor[] => {
     {
       scope: ['keyword', 'punctuation.definition.keyword'],
       settings: {
-        foreground: keywords,
+        foreground: c.keywords,
       },
     },
     {
       scope: 'keyword.operator',
       settings: {
-        foreground: operators,
+        foreground: c.operators,
       },
     },
     {
       name: 'Keywords, special/emphasized',
       scope: ['keyword.operator.ternary'],
       settings: {
-        foreground: operatorsSpecial,
+        foreground: c.operatorsSpecial,
       },
     },
     {
@@ -440,7 +476,7 @@ export default (palette: Palette): TokenColor[] => {
         'meta.selector',
       ],
       settings: {
-        foreground: keywords,
+        foreground: c.keywords,
       },
     },
     {
@@ -450,7 +486,7 @@ export default (palette: Palette): TokenColor[] => {
         'keyword.control punctuation.definition.keyword',
       ],
       settings: {
-        foreground: controls,
+        foreground: c.controls,
       },
     },
 
@@ -470,7 +506,7 @@ export default (palette: Palette): TokenColor[] => {
         'support.type.object.module',
       ],
       settings: {
-        foreground: imports,
+        foreground: c.imports,
       },
     },
     {
@@ -482,7 +518,7 @@ export default (palette: Palette): TokenColor[] => {
         'variable.language.wildcard.java',
       ],
       settings: {
-        foreground: classes,
+        foreground: c.classes,
       },
     },
 
@@ -515,7 +551,7 @@ export default (palette: Palette): TokenColor[] => {
         'entity.name.function.go',
       ],
       settings: {
-        foreground: functions,
+        foreground: c.functions,
       },
     },
     {
@@ -532,7 +568,7 @@ export default (palette: Palette): TokenColor[] => {
         'meta.at-rule.mixin variable',
       ],
       settings: {
-        foreground: variables,
+        foreground: c.variables,
       },
     },
     {
@@ -546,7 +582,7 @@ export default (palette: Palette): TokenColor[] => {
         'meta.decorator variable.other.object',
       ],
       settings: {
-        foreground: decorators,
+        foreground: c.decorators,
       },
     },
 
@@ -568,7 +604,7 @@ export default (palette: Palette): TokenColor[] => {
         'constant.other.key.perl',
       ],
       settings: {
-        foreground: variables,
+        foreground: c.variables,
       },
     },
     {
@@ -581,7 +617,7 @@ export default (palette: Palette): TokenColor[] => {
         'meta.export variable.other.readwrite',
       ],
       settings: {
-        foreground: fgSubtle,
+        foreground: c.fg2,
       },
     },
     {
@@ -594,14 +630,14 @@ export default (palette: Palette): TokenColor[] => {
         'meta.variable.assignment.destructured.object.coffee variable variable',
       ],
       settings: {
-        foreground: fg,
+        foreground: c.fg1,
       },
     },
     {
       name: 'Variable Aliasing, Reset inside export default',
       scope: ['meta.export.default variable.other.readwrite'],
       settings: {
-        foreground: fg,
+        foreground: c.fg1,
       },
     },
 
@@ -619,21 +655,21 @@ export default (palette: Palette): TokenColor[] => {
         'entity.name.tag.yaml',
       ],
       settings: {
-        foreground: keys1,
+        foreground: c.keys1,
       },
     },
     {
       name: 'Serialized dates',
       scope: ['constant.other.date', 'constant.other.timestamp'],
       settings: {
-        foreground: numbers,
+        foreground: c.numbers,
       },
     },
     {
       name: 'YAML Aliases',
       scope: ['variable.other.alias.yaml'],
       settings: {
-        foreground: functions,
+        foreground: c.functions,
       },
     },
     {
@@ -642,7 +678,7 @@ export default (palette: Palette): TokenColor[] => {
         'source.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: keys1,
+        foreground: c.keys1,
       },
     },
     {
@@ -651,7 +687,7 @@ export default (palette: Palette): TokenColor[] => {
         'source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: keys2,
+        foreground: c.keys2,
       },
     },
     {
@@ -660,7 +696,7 @@ export default (palette: Palette): TokenColor[] => {
         'source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: keys3,
+        foreground: c.keys3,
       },
     },
     {
@@ -669,7 +705,7 @@ export default (palette: Palette): TokenColor[] => {
         'source.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: keys4,
+        foreground: c.keys4,
       },
     },
 
@@ -679,7 +715,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'HTML Tag',
       scope: 'entity.name.tag',
       settings: {
-        foreground: tags,
+        foreground: c.tags,
         fontStyle: 'bold',
       },
     },
@@ -687,7 +723,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'HTML Tag Close',
       scope: 'tag.close entity.name.tag',
       settings: {
-        foreground: tagsClose,
+        foreground: c.tagsClose,
       },
     },
     {
@@ -698,21 +734,21 @@ export default (palette: Palette): TokenColor[] => {
         'meta.tag.sgml',
       ],
       settings: {
-        foreground: attributes,
+        foreground: c.attributes,
       },
     },
     {
       name: 'HTML Attribute ID',
       scope: ['entity.other.attribute-name.id'],
       settings: {
-        foreground: attributeIDs,
+        foreground: c.attributeIDs,
       },
     },
     {
       name: 'HTML Codes Punctuation',
       scope: 'punctuation.definition.entity.html',
       settings: {
-        foreground: stringEscape,
+        foreground: c.stringEscape,
       },
     },
     {
@@ -722,14 +758,14 @@ export default (palette: Palette): TokenColor[] => {
         'entity.other.attribute-name.pseudo-element',
       ],
       settings: {
-        foreground: fgSubtle,
+        foreground: c.fg2,
       },
     },
     {
       name: 'CSS Attribute Parent Selectors',
       scope: ['entity.other.attribute-name.parent-selector'],
       settings: {
-        foreground: keywords,
+        foreground: c.keywords,
       },
     },
 
@@ -739,7 +775,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Python Function Arguments',
       scope: 'meta.function-call.arguments',
       settings: {
-        foreground: fg,
+        foreground: c.fg1,
       },
     },
 
@@ -749,21 +785,21 @@ export default (palette: Palette): TokenColor[] => {
       name: 'GraphQL types',
       scope: ['meta.selectionset.graphql variable'],
       settings: {
-        foreground: strings,
+        foreground: c.strings,
       },
     },
     {
       name: 'GraphQL arguments',
       scope: ['meta.selectionset.graphql meta.arguments variable'],
       settings: {
-        foreground: fg,
+        foreground: c.fg1,
       },
     },
     {
       name: 'GraphQL fragment',
       scope: ['source.shell support.function.builtin'],
       settings: {
-        foreground: classes,
+        foreground: c.classes,
       },
     },
 
@@ -773,7 +809,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Shell Script Built-in Functions',
       scope: ['source.shell support.function.builtin'],
       settings: {
-        foreground: functions,
+        foreground: c.functions,
       },
     },
     {
@@ -783,7 +819,7 @@ export default (palette: Palette): TokenColor[] => {
         'source.shell variable.other',
       ],
       settings: {
-        foreground: classes,
+        foreground: c.classes,
       },
     },
     {
@@ -793,7 +829,7 @@ export default (palette: Palette): TokenColor[] => {
         'string.interpolated.dollar.shell',
       ],
       settings: {
-        foreground: code,
+        foreground: c.code,
       },
     },
     {
@@ -804,7 +840,7 @@ export default (palette: Palette): TokenColor[] => {
         'meta.scope.for-loop.shell string',
       ],
       settings: {
-        foreground: fg,
+        foreground: c.fg1,
       },
     },
 
@@ -814,14 +850,14 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Makefile Prerequisites',
       scope: 'meta.scope.prerequisites',
       settings: {
-        foreground: classes,
+        foreground: c.classes,
       },
     },
     {
       name: 'Makefile Function Targets',
       scope: 'entity.name.function.target',
       settings: {
-        foreground: strings,
+        foreground: c.strings,
         fontStyle: 'bold',
       },
     },
@@ -832,7 +868,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Lisp optional function parameters',
       scope: 'meta.function-parameters.lisp',
       settings: {
-        foreground: functions,
+        foreground: c.functions,
       },
     },
 
@@ -848,7 +884,7 @@ export default (palette: Palette): TokenColor[] => {
       scope: 'markup.bold',
       settings: {
         fontStyle: 'bold',
-        foreground: bold,
+        foreground: c.bold,
       },
     },
     {
@@ -862,7 +898,7 @@ export default (palette: Palette): TokenColor[] => {
       scope: ['markup.heading', 'entity.name.section'],
       settings: {
         fontStyle: 'bold',
-        foreground: headers,
+        foreground: c.headers,
       },
     },
     {
@@ -874,7 +910,7 @@ export default (palette: Palette): TokenColor[] => {
         'string.other.link.title',
       ],
       settings: {
-        foreground: links,
+        foreground: c.links,
         fontStyle: 'underline',
       },
     },
@@ -882,14 +918,14 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Markup links',
       scope: ['markup.underline.link', 'markup.underline.link.image'],
       settings: {
-        foreground: fgSubtle,
+        foreground: c.fg2,
       },
     },
     {
       name: 'Markup inline code',
       scope: ['markup.inline.raw', 'markup.raw.restructuredtext'],
       settings: {
-        foreground: code,
+        foreground: c.code,
       },
     },
     {
@@ -900,14 +936,14 @@ export default (palette: Palette): TokenColor[] => {
         'markup.fenced_code.block.markdown punctuation.definition.markdown',
       ],
       settings: {
-        foreground: code,
+        foreground: c.code,
       },
     },
     {
       name: 'Markup blockquotes',
       scope: ['entity.name.directive.restructuredtext', 'markup.quote'],
       settings: {
-        foreground: strings,
+        foreground: c.strings,
       },
     },
     {
@@ -920,39 +956,39 @@ export default (palette: Palette): TokenColor[] => {
         'markup.punctuation.list.beginning',
       ],
       settings: {
-        foreground: numbers,
+        foreground: c.numbers,
       },
     },
     {
       name: 'Markup horizontal rule',
       scope: ['meta.separator.markdown'],
       settings: {
-        foreground: fgSubtle,
+        foreground: c.fg2,
       },
     },
     {
       name: 'Markup constants',
       scope: ['punctuation.definition.constant.restructuredtext'],
       settings: {
-        foreground: numbers,
+        foreground: c.numbers,
       },
     },
     {
       scope: 'markup.inserted',
       settings: {
-        foreground: added,
+        foreground: c.add,
       },
     },
     {
       scope: 'markup.deleted',
       settings: {
-        foreground: deleted,
+        foreground: c.deleted,
       },
     },
     {
       scope: 'markup.changed',
       settings: {
-        foreground: modified,
+        foreground: c.modify,
       },
     },
 
@@ -962,14 +998,14 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Go Import Names',
       scope: ['source.go entity.name.import'],
       settings: {
-        foreground: strings,
+        foreground: c.strings,
       },
     },
     {
       name: 'Go Entity Names Override',
       scope: ['source.go entity.name.type'],
       settings: {
-        foreground: fg,
+        foreground: c.fg1,
       },
     },
 
@@ -979,7 +1015,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Cucumber Table Keywords',
       scope: ['keyword.control.cucumber.table'],
       settings: {
-        foreground: functions,
+        foreground: c.functions,
       },
     },
 
@@ -989,7 +1025,7 @@ export default (palette: Palette): TokenColor[] => {
       name: 'PHP Metatags',
       scope: 'metatag.php',
       settings: {
-        foreground: tags,
+        foreground: c.tags,
       },
     },
 
@@ -999,14 +1035,14 @@ export default (palette: Palette): TokenColor[] => {
       name: 'Git Rebase Function Header',
       scope: 'support.function.git-rebase',
       settings: {
-        foreground: code,
+        foreground: c.code,
       },
     },
     {
       name: 'Git Rebase SHA Header',
       scope: 'constant.sha.git-rebase',
       settings: {
-        foreground: strings,
+        foreground: c.strings,
       },
     },
   ]

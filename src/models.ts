@@ -39,6 +39,61 @@ export interface PackageDef {
   }
 }
 
+export interface TokenSemanticColors {
+  fg1: string
+  fg2: string
+  headers: string
+  punctuation: string
+  // Comments
+  comments: string
+  commentTags: string
+  commentParams: string
+  // Numbers
+  numbers: string
+  // Strings
+  strings: string
+  stringInterpolation: string
+  stringEscape: string
+  // Regex
+  regex: string
+  regexCharacterClass: string
+  regexGroup: string
+  regexQuantifier: string
+  // Keywords
+  keywords: string
+  operators: string
+  operatorsSpecial: string
+  storage: string
+  controls: string
+  imports: string
+  // Functions
+  functions: string
+  // Types
+  thisKeyword: string
+  interfaces: string
+  classes: string
+  decorators: string
+  // Variables
+  variables: string
+  // HTML
+  tags: string
+  tagsClose: string
+  attributes: string
+  attributeIDs: string
+  // Serializable
+  keys1: string
+  keys2: string
+  keys3: string
+  keys4: string
+  // Markup
+  bold: string
+  links: string
+  code: string
+  // Misc
+  add: string
+  deleted: string
+  modify: string
+}
 export interface WorkbenchSemanticColors {
   bg1: string
   bg2: string
