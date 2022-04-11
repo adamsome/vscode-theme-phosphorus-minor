@@ -33,12 +33,22 @@ export const padZeroes = (size: number, value: number | string): string => {
   }
   return _value
 }
-export const opacity = (percent: number, color: string): string => {
+export const opacity = (percent: number, hexColor: string): string => {
+  const prevRgbHex = hexColor.slice(0, 7)
+  const prevOpacityHex = hexColor.slice(7)
+  let nextPercent = percent
+  if (prevOpacityHex) {
+    nextPercent *= parseInt(prevOpacityHex, 16) / 255
+  }
   // Convert percent to range from 0 - 255
-  let percent256 = Math.round((percent * 256) / 100)
+  let percent256 = Math.round((nextPercent * 256) / 100)
   percent256 = percent256 < 0 ? 0 : percent256 > 255 ? 255 : percent256
   // Convert to hex string
   const opacityHex = percent256.toString(16)
   // Append, padding left w/ zeroes
-  return color + padZeroes(2, opacityHex)
+  return prevRgbHex + padZeroes(2, opacityHex)
+}
+
+export function toArray<T>(arr: T | T[]): T[] {
+  return Array.isArray(arr) ? arr : [arr]
 }
