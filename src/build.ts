@@ -1,11 +1,11 @@
-import PALETTE from './palette'
-import WorkbenchConfig from './workbench'
-import TokensConfig from './tokens'
 import { PackageDef, Theme, ThemeDef } from './models'
+import PALETTE from './palette'
+import TokensConfig from './tokens'
 import { readJson, writeJson } from './util'
+import buildWorkbenchColors from './workbench-colors'
 
 function build(def: ThemeDef) {
-  const workbench = WorkbenchConfig(PALETTE)
+  const workbench = buildWorkbenchColors(def.uiTheme, def.subtype)
   const tokens = TokensConfig(PALETTE)
 
   const theme: Theme = {
