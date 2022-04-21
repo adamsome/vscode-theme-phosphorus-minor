@@ -35,7 +35,7 @@
   ],
   "icon": "logo.png",
   "galleryBanner": {
-    "color": "#32302f",
+    "color": "#3ae73a",
     "theme": "dark"
   },
   "contributes": {
