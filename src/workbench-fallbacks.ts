@@ -30,16 +30,19 @@ const DEFAULT_FALLBACKS: WorkbenchWithFallbacks = {
     key: 'input.placeholderForeground',
     opacity: 37.5,
   },
+  'inputValidation.errorForeground': 'badge.foreground',
   'inputValidation.errorBorder': 'editorError.foreground',
   'inputValidation.errorBackground': {
     key: 'editorError.foreground',
     opacity: 50,
   },
+  'inputValidation.infoForeground': 'badge.foreground',
   'inputValidation.infoBorder': 'editorInfo.foreground',
   'inputValidation.infoBackground': {
     key: 'editorInfo.foreground',
     opacity: 50,
   },
+  'inputValidation.warningForeground': 'badge.foreground',
   'inputValidation.warningBorder': 'editorWarning.foreground',
   'inputValidation.warningBackground': {
     key: 'editorWarning.foreground',

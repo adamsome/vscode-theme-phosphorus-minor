@@ -150,6 +150,7 @@ export default function buildWorkbenchColors(
     'peekViewEditorGutter.background': opacity(75, c.bg4),
     'pickerGroup.foreground': c.primary,
     'statusBar.debuggingBackground': c.primary,
+    'statusBar.debuggingForeground': p.black,
     'statusBar.focusBorder': TRANSPARENT,
     'terminal.ansiBlack': c.black,
     'terminal.ansiBrightBlack': c.brightBlack,
