@@ -175,6 +175,8 @@ const DEFAULT_FALLBACKS: WorkbenchWithFallbacks = {
     opacity: 95,
   },
   'editorHoverWidget.border': 'editorWidget.border',
+  'editorStickyScroll.background': 'activityBar.background',
+  'editorStickyScrollHover.background': 'activityBar.background',
   'editorOverviewRuler.findMatchForeground': 'editor.findMatchBackground',
   'editorOverviewRuler.rangeHighlightForeground':
     'editor.findRangeHighlightBackground',

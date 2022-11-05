@@ -1005,6 +1005,10 @@ export interface WorkbenchColors {
   'editorGhostText.background': string
   /** Foreground color of the ghost text shown by inline completion providers and the suggest preview. */
   'editorGhostText.foreground': string
+  /** Editor sticky scroll background color. */
+  'editorStickyScroll.background': string
+  /** Editor sticky scroll on hover background color. */
+  'editorStickyScrollHover.background': string
 
   /**
    * The Debug Exception widget is a peek view that shows in the editor when

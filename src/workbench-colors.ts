@@ -144,6 +144,8 @@ export default function buildWorkbenchColors(
     'editorWidget.background': c.bg4,
     'editorWidget.foreground': c.fg2,
     'editorWidget.border': c.border2,
+    'editorStickyScroll.background': c.bg3,
+    'editorStickyScrollHover.background': c.bg4,
     'diffEditor.insertedTextBackground': c.bgAdd,
     'diffEditor.removedTextBackground': c.bgDelete,
     'peekViewEditor.background': opacity(75, c.bg4),
